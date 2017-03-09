@@ -15,7 +15,6 @@ module.exports = {
       "stylesheets/bootstrap-select.min.css",
       "stylesheets/styles.css"
     ],
-    "images/": "images/",
     "fonts/" : "fonts/"
   },
   rpc: {
