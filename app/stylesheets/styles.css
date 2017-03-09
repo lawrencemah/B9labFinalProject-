@@ -15,7 +15,7 @@ hr {
   width: 70%;
   margin: 1em auto;
   display: block;
-  border-top: 2px solid #d31145; }
+  border-top: 2px solid navy; }
 
 hr.full-width {
   width: 100%;
@@ -28,7 +28,7 @@ hr.full-width {
 .header {
   display: inline-block;
   width: 100%;
-  background: #d31145;
+  background: navy;
   margin-bottom: 2em; }
   .header p {
     text-align: center;
@@ -58,7 +58,7 @@ hr.full-width {
   margin-top: 30px;
   float: right;
   padding: 0.5em 0;
-  background: #d31145;
+  background: grey;
   color: #fff;
   border-radius: 5px;
   cursor: pointer; }
@@ -81,7 +81,7 @@ hr.full-width {
 .row-title {
   font-size: 1.5em;
   font-weight: 800;
-  color: #d31145;
+  color: teal;
   text-decoration: underline; }
 
 .internal-wrapper .button {
@@ -142,9 +142,9 @@ hr.full-width {
     color: #000; }
   .nav-tabs li.active > a, .nav-pills li.active > a {
     color: #fff;
-    background: #d31145; }
+    background: teal; }
   .nav-tabs li.active > a:hover, .nav-pills li.active > a:hover {
     color: #fff;
-    background: #d31145; }
+    background: teal; }
 
 /*# sourceMappingURL=styles.css.map */
