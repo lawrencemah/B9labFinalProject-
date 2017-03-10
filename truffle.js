@@ -1,5 +1,6 @@
+var DefaultBuilder = require("truffle-default-builder");
 module.exports = {
-  build: {
+  build: new DefaultBuilder({
     "index.html": "index.html",
     "app.js": [
       "javascripts/jquery.min.js",
@@ -16,9 +17,12 @@ module.exports = {
       "stylesheets/styles.css"
     ],
     "fonts/" : "fonts/"
-  },
-  rpc: {
-    host: "localhost",
-    port: 8545
+  }),
+  networks: {
+    development: {
+      host: "localhost",
+      port: 8545,
+      network_id: "*"
+    }
   }
 };

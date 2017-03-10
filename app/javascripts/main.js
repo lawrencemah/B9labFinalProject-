@@ -4,8 +4,8 @@ var fundingHub;
 
 //helper function to add a project to Browse Projects table
 function addProjectRow(address, raised, requested, deadline) {
-	if (deadline < (Date.now()/1000))
-		return;
+	//if (deadline < (Date.now()/1000))
+	//	return;
 	if (deadline == "Deadline"){
 		var _html = '<div class="row full-width-row table-row">\
 						<div class="col-xs-6 cell">' +
@@ -83,7 +83,7 @@ function contribute() {
 		amount : $('.contribute-project-amount').val()
 	}
 
-	fundingHub.contribute(contribution.project,{from : web3.eth.accounts[0], value : contribution.amount, gas:600000})
+	fundingHub.contribute(contribution.project,{from : web3.eth.accounts[0], value : contribution.amount, gas:10000000})
 	.then(function (){
 		refreshProjects();
 		clearInputFields();
@@ -100,9 +100,11 @@ function refreshProjects() {
 	//delete previous projects
 	emptyProjectTable();
 
-	fundingHub.getProjects.call().then(function (projects) {
+	fundingHub.getProjects().then(function (projects) {
+		console.log(projects);
 		for (i=0;i<projects.length;i++){
 			getProjectDetails(projects[i], function(project){
+				console.log(project);
 				//addProjectRow 
 				addProjectRow(project.address,project.raised,project.requested,project.deadline);
 			});
@@ -111,18 +113,20 @@ function refreshProjects() {
 }
 
 function getProjectDetails(address, cb) {
-	var project = Project.at(address);
-	var thisProject = {};
-	thisProject.address = address;
-	thisProject.raised = web3.toDecimal(web3.eth.getBalance(address));
-	project.thisProject.call().then(function(_project){
-		//index 1 = request amount
-		//index 2 = deadline
-		thisProject.requested = web3.toDecimal(_project[1]);
-		thisProject.deadline = web3.toDecimal(_project[2]);
-		cb(thisProject);
-		return null
-	});
+	Project.at(address).then(project => {
+		var thisProject = {};
+		thisProject.address = address;
+		thisProject.raised = web3.toDecimal(web3.eth.getBalance(address));
+		project.thisProject().then(function(_project){
+			//console.log("PROJECT : " + _project[1]);
+			//index 1 = request amount
+			//index 2 = deadline
+			thisProject.requested = web3.toDecimal(_project[1]);
+			thisProject.deadline = web3.toDecimal(_project[2]);
+			cb(thisProject);
+			return null
+		});
+	});	
 }
 
 window.onload = function() {
@@ -140,8 +144,12 @@ window.onload = function() {
     accounts = accs;
     account = accounts[0];
     web3.eth.defaultAccount = account;
-    fundingHub = FundingHub.deployed();
+    fundingHub = "";
+    FundingHub.deployed().then(instance => {
+    	fundingHub = instance;
+    	refreshProjects();
+    });
 
-    refreshProjects();
+    
   });
 }
