@@ -26,23 +26,5 @@ contract('Project', function(accounts) {
       });
     });
   });
-  it("refund to account 1",function() {
-     var project = Project.deployed();
-     var contributionAmount = 100000000;
-     var account1Balance = web3.eth.getBalance(accounts[3]).toNumber();
-     return project.refund()
-      .then (function(tx){
-      var gasUsed = web3.eth.getTransactionReceipt(tx).gasUsed;
-      console.log(gasUsed);
-      console.log(( web3.eth.getBalance(accounts[3]).toNumber())- account1Balance);
-      assert.equal(true,(web3.eth.getBalance(accounts[3]).toNumber() = (account1Balance + contributionAmount)),"Incorrect")
-    
-
-    })
-
-   });
-
-
-
 });
 
