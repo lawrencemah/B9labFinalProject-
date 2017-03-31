@@ -5,6 +5,7 @@ contract Project {
 		address owner;
 		uint askingAmount;
 		uint deadline;
+		string status;
 	}
 
 	mapping (address => uint) contributions;
@@ -15,6 +16,7 @@ contract Project {
 		thisProject.owner = _owner;
 		thisProject.askingAmount = _askingAmount;
 		thisProject.deadline = _deadline;
+		thisProject.status = "";
 	}
 
 	function fund(address _contributor) payable {
@@ -52,17 +54,24 @@ contract Project {
 	}
 
 	function payout() {
+		thisProject.status = "Paid Out";
 		if (!thisProject.owner.send(this.balance))
 			throw;
-			thisProject.deadline = 0;
 	}
 
 	function refund() {
 		for (uint i = 0; i < contributors.length; i++){
 			address contributor = contributors[i];
-			if (!contributor.send(contributions[contributor]))
+			uint _contribution = contributions[contributor];
+			
+			//mark as paid
+			contributions[contributor] = 0;
+			thisProject.status = "Refunded";
+
+			if (!contributor.send(_contribution)){
 				throw;
+			}
+				
 		}
-		thisProject.deadline=0;
 	}
 }

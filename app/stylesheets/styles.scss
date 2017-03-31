@@ -54,6 +54,14 @@ hr.full-width {
 	margin-bottom:1.5em;
 }
 
+.col-title {
+	font-weight:800;
+}
+
+.accounts-row {
+	font-size:0.8em;
+}
+
 .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
     width: 270px !important;
 }
